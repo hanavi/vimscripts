@@ -228,6 +228,7 @@ fun! SnakeUpdate()
     if SnakeCheckCollision() == 1
         let b:running = 0
         call SnakeGameOver()
+        return 0
     endif
 
     " Clear the snake from the screen
