@@ -179,6 +179,7 @@ fun! SnakeUpdate()
         if l:new_row == 1
             let b:running = 0
             call SnakeGameOver()
+            return 0
         endif
 
     endif
@@ -192,6 +193,7 @@ fun! SnakeUpdate()
         if l:new_row == 22
             let b:running = 0
             call SnakeGameOver()
+            return 0
         endif
 
     endif
@@ -205,6 +207,7 @@ fun! SnakeUpdate()
         if l:new_col == 1
             let b:running = 0
             call SnakeGameOver()
+            return 0
         endif
 
     endif
@@ -217,6 +220,7 @@ fun! SnakeUpdate()
         if l:new_col == 67
             let b:running = 0
             call SnakeGameOver()
+            return 0
         endif
 
     endif
