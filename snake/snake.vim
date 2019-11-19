@@ -1,9 +1,9 @@
 fun! SnakeInit()
-    let stat = append(0, "-------------------------------------------------------------------")
+    let l:stat = append(0, "-------------------------------------------------------------------")
     for i in range(20)
-        let stat = append(1, "|                                                                 |")
+        let l:stat = append(1, "|                                                                 |")
     endfor
-    let stat = append(21, "-------------------------------------------------------------------")
+    let l:stat = append(21, "-------------------------------------------------------------------")
 
     let b:snake = [[2,2],[3,2],[4,2]]
     let b:direction = "right"
@@ -33,7 +33,7 @@ fun! SnakeDrawScore()
     call setpos('.', [0, b:max_row + 3, 2, 0])
     " norm 50sScore: b:score
     let l:score = " Score: ".b:score
-    let st = append(b:max_row + 2, l:score)
+    let l:stat = append(b:max_row + 2, l:score)
     norm! dG
 endfun
 
@@ -51,23 +51,23 @@ fun! SnakeCheckFood()
 endfun
 
 fun! SnakeGenFood()
-    let food_row = Random(b:max_row) + 2
-    let food_col = Random(b:max_col) + 2
-    let b:food = [food_row, food_col]
+    let l:food_row = Random(b:max_row-5) + 3
+    let l:food_col = Random(b:max_col-5) + 3
+    let b:food = [l:food_row, l:food_col]
 endfun
 
 fun! SnakeDrawFood()
-    let row = b:food[0]
-    let col = b:food[1]
-    call setpos('.', [0, row, col, 0])
+    let l:row = b:food[0]
+    let l:col = b:food[1]
+    call setpos('.', [0, l:row, l:col, 0])
     norm! r#
 endfun
 
 fun! SnakeClear()
     for s in b:snake
-        let row = s[0]
-        let col = s[1]
-        call setpos('.', [0, row, col, 0])
+        let l:row = s[0]
+        let l:col = s[1]
+        call setpos('.', [0, l:row, l:col, 0])
         " This might be a bad way to do this...
         norm! r .
         call setpos('.', [0, 1, 1, 0])
@@ -76,9 +76,9 @@ endfun
 
 fun! SnakeDraw()
     for s in b:snake
-        let row = s[0]
-        let col = s[1]
-        call setpos('.', [0, row, col, 0])
+        let l:row = s[0]
+        let l:col = s[1]
+        call setpos('.', [0, l:row, l:col, 0])
         norm! r*
         call setpos('.', [0, 1, 1, 0])
     endfor
@@ -109,15 +109,15 @@ fun! SnakeRight()
 endfun
 
 fun! SnakeUpdate()
-    let last_row = b:snake[-1][0]
-    let last_col = b:snake[-1][1]
+    let l:last_row = b:snake[-1][0]
+    let l:last_col = b:snake[-1][1]
 
     if b:direction == "up"
 
-        let new_col = last_col
-        let new_row = last_row - 1
+        let l:new_col = l:last_col
+        let l:new_row = l:last_row - 1
 
-        if new_row == 1
+        if l:new_row == 1
             let b:running = 0
             call SnakeGameOver()
         endif
@@ -125,10 +125,10 @@ fun! SnakeUpdate()
 
     if b:direction == "down"
 
-        let new_col = last_col
-        let new_row = last_row + 1
+        let l:new_col = l:last_col
+        let l:new_row = l:last_row + 1
 
-        if new_row == 21
+        if l:new_row == 22
             let b:running = 0
             call SnakeGameOver()
         endif
@@ -136,10 +136,10 @@ fun! SnakeUpdate()
 
     if b:direction == "left"
 
-        let new_col = last_col - 1
-        let new_row = last_row
+        let l:new_col = l:last_col - 1
+        let l:new_row = l:last_row
 
-        if new_col == 1
+        if l:new_col == 1
             let b:running = 0
             call SnakeGameOver()
         endif
@@ -147,16 +147,16 @@ fun! SnakeUpdate()
 
     if b:direction == "right"
 
-        let new_col = last_col + 1
-        let new_row = last_row
+        let l:new_col = l:last_col + 1
+        let l:new_row = l:last_row
 
-        if new_col == 67
+        if l:new_col == 67
             let b:running = 0
             call SnakeGameOver()
         endif
     endif
 
-    call add(b:snake,[new_row, new_col])
+    call add(b:snake,[l:new_row, l:new_col])
     if SnakeCheckCollision() == 1
         let b:running = 0
         call SnakeGameOver()
@@ -176,15 +176,15 @@ endfun
 
 fun! UpdateDirection(key_num)
 
-    let key = nr2char(a:key_num)
+    let l:key = nr2char(a:key_num)
 
-    if key == 'j'
+    if l:key == 'j'
         call SnakeDown()
-    elseif key == 'k'
+    elseif l:key == 'k'
         call SnakeUp()
-    elseif key == 'h'
+    elseif l:key == 'h'
         call SnakeLeft()
-    elseif key == 'l'
+    elseif l:key == 'l'
         call SnakeRight()
     endif
 
@@ -196,14 +196,14 @@ fun! SnakeRun()
         call SnakeDrawFood()
         call SnakeUpdate()
         redraw
-        let key_num = getchar(0)
+        let l:key_num = getchar(0)
 
-        if key_num == 113
+        if l:key_num == 113
             let b:running = 0
         endif
 
-        if key_num != 0
-            call UpdateDirection(key_num)
+        if l:key_num != 0
+            call UpdateDirection(l:key_num)
         endif
 
         sleep 200m
