@@ -1,5 +1,24 @@
 " Intialize some values and the game board
+fun! SnakeGo()
+    call SnakeInit()
+    call SnakeRun()
+endfun
+
 fun! SnakeInit()
+
+    set nocursorline
+
+    syntax match snake '*'
+    syntax match wall '|'
+    syntax match wall '-'
+    syntax match food '#'
+    syntax match game "Game Over"
+
+    hi snake guifg=yellow guibg=yellow
+    hi wall guifg=cyan guibg=cyan
+    hi food guifg=blue guibg=blue
+    hi game guifg=cyan guibg=black
+
 
     " Set some initial/default variables
     let b:snake = [[2,2],[3,2],[4,2]]  " Starting Snake
@@ -329,6 +348,7 @@ fun! SnakeGameOver()
     " Add a line with the score (there is probably a better way to make this
     " consistent for both text outputs...
     call append('.', l:score)
+    call setpos('.', [0,0,0,0])
 
 endfun
 
