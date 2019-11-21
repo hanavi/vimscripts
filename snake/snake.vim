@@ -14,10 +14,10 @@ fun! SnakeInit()
     syntax match food '#'
     syntax match game "Game Over"
 
-    hi snake guifg=yellow guibg=yellow
-    hi wall guifg=cyan guibg=cyan
-    hi food guifg=blue guibg=blue
-    hi game guifg=cyan guibg=black
+    hi snake guifg=yellow guibg=yellow ctermfg=yellow ctermbg=yellow
+    hi wall guifg=cyan guibg=cyan ctermfg=cyan ctermbg=cyan
+    hi food guifg=blue guibg=blue ctermfg=blue ctermbg=blue
+    hi game guifg=cyan guibg=black ctermfg=cyan ctermbg=black
 
 
     " Set some initial/default variables
@@ -338,16 +338,13 @@ fun! SnakeGameOver()
     " Write to the screen
     norm! 15s-- Game Over --
 
-    " Fix the score text
-    let l:score = "|                         Score: ".b:score
-    while len(l:score) < b:max_col + 1
-        let l:score = l:score." "
-    endwhile
-    let l:score = l:score."|"
+    let l:score = "Score: ".b:score
+    call setpos('.', [0, l:row + 1, l:col + 3, 0])
+    exec "norm! ".len(l:score)."s".l:score
 
     " Add a line with the score (there is probably a better way to make this
     " consistent for both text outputs...
-    call append('.', l:score)
+    " call append('.', l:score)
     call setpos('.', [0,0,0,0])
 
 endfun
