@@ -10,6 +10,5 @@ This repo is just a place to store some random fun vimscripts
 To run this in vim:
 ```
  :source snake.vim
- :call SnakeInit()
- :call SnakeRun()
+ :call SnakeGo()
 ```
